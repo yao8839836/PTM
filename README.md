@@ -25,7 +25,7 @@ PTM(a): /src/test/RunPTM.java
 
 PTM(b): /src/test/RunPTMMustLink.java
 
-#Herbs and Symptoms Prediction tasks
+#Herbs and symptoms prediction tasks
 
 PTM(a): /src/test/PTMPredict.java
 
