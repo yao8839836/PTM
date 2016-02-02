@@ -7,7 +7,7 @@ Java 7 or above, I use Java 8 in this project.
 
 #Data
 
-All 33,765 prescription: /file/pre_herbs.txt, file/pre_symptoms.txt
+All 33,765 prescriptions: /file/pre_herbs.txt, file/pre_symptoms.txt
 
 Training set: /file/pre_herbs_train.txt, /file/pre_symptoms_train.txt
 
