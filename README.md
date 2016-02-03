@@ -4,6 +4,8 @@ A Topic Model for Traditional Chinese Medicine Presciption
 #Require
 Java 7 or above, I use Java 8 in this project.
 
+Eclipse
+
 
 #Data
 
