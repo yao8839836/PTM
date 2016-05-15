@@ -1,8 +1,10 @@
 # PTM
-A Topic Model for Traditional Chinese Medicine Presciption
+A Topic Model for Traditional Chinese Medicine Presciptions
 
 #Require
 Java 7 or above, I use Java 8 in this project.
+
+Eclipse
 
 
 #Data
@@ -31,6 +33,9 @@ PTM(a): /src/test/PTMPredict.java
 
 PTM(b): /src/test/PTMMustPredict.java
 
+# Topic precision
+
+TopicPrecisionSymToHerb.java
  
 
 
