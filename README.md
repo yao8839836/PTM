@@ -21,11 +21,17 @@ Symptom list: /data/symptom_contains.txt
 
 TCM MeSH herb-symptom correspondence knowledge: /data/symptom_herb_tcm_mesh.txt
 
+Symptom Category: /file/symptom_category.txt
+
 #Demo
 
 PTM(a): /src/test/RunPTM.java
 
 PTM(b): /src/test/RunPTMMustLink.java
+
+PTM(c): /src/test/RunPTMTreat.java
+
+PTM(d): /src/test/RunPTMTreatMust.java
 
 #Herbs and symptoms prediction tasks
 
@@ -33,9 +39,15 @@ PTM(a): /src/test/PTMPredict.java
 
 PTM(b): /src/test/PTMMustPredict.java
 
-# Topic precision
+PTM(c): /src/test/PTMTreatPredict.java
 
-TopicPrecisionSymToHerb.java
+PTM(d): /src/test/PTMTreatMustPredict.java
+
+# Topic herb precision
+
+/src/test/TopicPrecisionSymToHerb.java
  
+# Topic symptom coherence
 
+/src/test/TopicKnowCoherence.java
 
