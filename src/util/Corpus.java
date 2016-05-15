@@ -156,9 +156,86 @@ public class Corpus {
 
 		double p_i_j = (double) co_occur / documents.length;
 
-		double pmi = Math.log(p_i_j / (p_i * p_j));
+		double e = 0;
+
+		if (p_i_j == 0)
+			e = 0.0001;
+
+		double pmi = Math.log((p_i_j + e) / (p_i * p_j));
 
 		return pmi;
+	}
+
+	/**
+	 * 计算两个词的点互信息NPMI (EACL 14)
+	 * 
+	 * @param documents
+	 * @param word_i
+	 * @param word_j
+	 * @return
+	 */
+	public static double NPMI(int[][] documents, int word_i, int word_j) {
+
+		int count_i = DocumentFrequency(documents, word_i);
+
+		int count_j = DocumentFrequency(documents, word_j);
+
+		int co_occur = DocumentFrequency(documents, word_i, word_j);
+
+		double p_i = (double) count_i / documents.length;
+
+		double p_j = (double) count_j / documents.length;
+
+		double p_i_j = (double) co_occur / documents.length;
+
+		double e = 0;
+
+		if (p_i_j == 0)
+			e = 0.0001;
+
+		double pmi = Math.log((p_i_j + e) / (p_i * p_j)) / -Math.log((p_i_j + e));
+
+		return pmi;
+	}
+
+	/**
+	 * 主题的PMI (Newman et al., 2010)
+	 * 
+	 * @param top_words
+	 * @param documents
+	 * @return
+	 */
+	public static double pmi_coherence(int[] top_words, int[][] documents) {
+
+		double topic_pmi = 0;
+
+		for (int j = 1; j < top_words.length; j++) {
+			for (int i = 0; i < j; i++)
+				topic_pmi += PMI(documents, top_words[i], top_words[j]);
+		}
+
+		return topic_pmi;
+
+	}
+
+	/**
+	 * 主题的NPMI (EACL' 2014)
+	 * 
+	 * @param top_words
+	 * @param documents
+	 * @return
+	 */
+	public static double npmi_coherence(int[] top_words, int[][] documents) {
+
+		double topic_pmi = 0;
+
+		for (int j = 1; j < top_words.length; j++) {
+			for (int i = 0; i < j; i++)
+				topic_pmi += NPMI(documents, top_words[i], top_words[j]);
+		}
+
+		return topic_pmi;
+
 	}
 
 	/**

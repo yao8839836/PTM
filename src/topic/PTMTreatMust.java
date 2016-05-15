@@ -1,13 +1,6 @@
 package topic;
 
-/**
- * Prescription Topic Model
- * 
- * @author Liang Yao
- * @email yaoliang@zju.edu.cn
- *
- */
-public class PTM {
+public class PTMTreatMust {
 
 	int[][] herbs;
 
@@ -29,17 +22,17 @@ public class PTM {
 
 	double eta;
 
-	public int[][] syndrome;
+	int[][] syndrome;
 
 	/**
 	 * treatment method assignments
 	 */
-	public int[][] treatment;
+	int[][] treatment;
 
 	/**
 	 * jun-chen-zuo-shi assignments
 	 */
-	public int[][] x;
+	int[][] x;
 
 	int[][][] kxh;
 
@@ -57,13 +50,45 @@ public class PTM {
 
 	int iterations;
 
-	public PTM(int[][] herbs, int[][] symptoms, int H, int S) {
+	/*
+	 * herb symptom treatment part
+	 */
+	int[][] treat_links;
+
+	int[] n_treat_links;
+
+	int[] z_treat_links;
+
+	int[] x_treat_links;
+
+	double alpha_t;
+
+	/*
+	 * herb links
+	 * 
+	 */
+
+	int[][] links;
+
+	int[] nlinks;
+
+	int[] z_links;
+
+	int[][] x_links;
+
+	double alpha_l;
+
+	public PTMTreatMust(int[][] herbs, int[][] symptoms, int H, int S, int[][] links, int[][] treat_links) {
 
 		this.herbs = herbs;
 		this.symptoms = symptoms;
 
 		this.H = H;
 		this.S = S;
+
+		this.links = links;
+
+		this.treat_links = treat_links;
 	}
 
 	public void initialState() {
@@ -116,9 +141,58 @@ public class PTM {
 
 		}
 
+		// links
+
+		nlinks = new int[K];
+
+		z_links = new int[links.length];
+
+		x_links = new int[links.length][2];
+
+		for (int i = 0; i < links.length; i++) {
+
+			int topic = (int) (Math.random() * K);
+
+			z_links[i] = topic;
+
+			int role_1 = (int) (Math.random() * X);
+
+			int role_2 = (int) (Math.random() * X);
+
+			x_links[i][0] = role_1;
+
+			x_links[i][1] = role_2;
+
+			updateLinkEntityCount(topic, x_links[i], links[i], +1);
+
+		}
+
+		// herb symptom treatment
+
+		n_treat_links = new int[K];
+
+		z_treat_links = new int[treat_links.length];
+
+		x_treat_links = new int[treat_links.length];
+
+		for (int i = 0; i < treat_links.length; i++) {
+
+			int topic = (int) (Math.random() * K);
+
+			z_treat_links[i] = topic;
+
+			int role = (int) (Math.random() * X);
+
+			x_treat_links[i] = role;
+
+			updateHerbSymptomLinkCount(topic, role, treat_links[i], +1);
+
+		}
+
 	}
 
-	public void markovChain(int K, double alpha, double beta, double beta_bar, double eta, int iterations) {
+	public void markovChain(int K, double alpha, double beta, double beta_bar, double eta, double alpha_l,
+			double alpha_t, int iterations) {
 
 		this.K = K;
 		this.alpha = alpha;
@@ -126,6 +200,10 @@ public class PTM {
 		this.beta_bar = beta_bar;
 		this.iterations = iterations;
 		this.eta = eta;
+
+		this.alpha_l = alpha_l;
+
+		this.alpha_t = alpha_t;
 
 		initialState();
 
@@ -157,6 +235,28 @@ public class PTM {
 				x[p][n] = treat_role[1];
 
 			}
+
+		}
+
+		// herb symptom links
+
+		for (int i = 0; i < treat_links.length; i++) {
+
+			int[] topic_role = sampleFullConditionalHerbSymptomLink(i);
+
+			z_treat_links[i] = topic_role[0];
+
+			x_treat_links[i] = topic_role[1];
+
+		}
+
+		// links
+
+		for (int i = 0; i < links.length; i++) {
+
+			int topic = sampleFullConditionalLink(i);
+
+			z_links[i] = topic;
 
 		}
 	}
@@ -230,6 +330,109 @@ public class PTM {
 		return treat_role;
 	}
 
+	int[] sampleFullConditionalHerbSymptomLink(int i) {
+
+		int topic = z_treat_links[i];
+
+		int role = x_treat_links[i];
+
+		int[] syndrome_role = new int[2];
+
+		updateHerbSymptomLinkCount(topic, role, treat_links[i], -1);
+
+		double[][] pr = new double[K][X];
+
+		for (int k = 0; k < K; k++) {
+
+			for (int r = 0; r < X; r++) {
+
+				pr[k][r] = (n_treat_links[k] + alpha_t) * (ns[treat_links[i][1]][k] + beta_bar)
+						/ (nssum[k] + S * beta_bar) * (nhsum[k][r] + eta) / (nxsum[k] + X * eta)
+						* (kxh[k][r][treat_links[i][0]] + beta) / (nhsum[k][r] + H * beta);
+
+			}
+		}
+
+		double[] pr_sum = new double[K * X];
+
+		for (int k = 0; k < K; k++) {
+
+			for (int r = 0; r < X; r++) {
+				pr_sum[k * X + r] = pr[k][r];
+			}
+
+		}
+
+		int index = sample(pr_sum);
+
+		topic = index / X;
+		role = index % X;
+
+		updateHerbSymptomLinkCount(topic, role, treat_links[i], +1);
+
+		syndrome_role[0] = topic;
+		syndrome_role[1] = role;
+
+		return syndrome_role;
+
+	}
+
+	int sampleFullConditionalLink(int i) {
+
+		int topic = z_links[i];
+
+		updateLinkEntityCount(topic, x_links[i], links[i], -1);
+
+		double[][][] pr = new double[K][X][X];
+
+		for (int k = 0; k < K; k++) {
+
+			for (int r = 0; r < X; r++) {
+
+				for (int r1 = 0; r1 < X; r1++) {
+
+					pr[k][r][r1] = (nlinks[k] + alpha_l) * (nhsum[k][r] + eta) / (nxsum[k] + X * eta)
+							* (kxh[k][r][links[i][0]] + beta) / (nhsum[k][r] + H * beta) * (nhsum[k][r1] + eta)
+							/ (nxsum[k] + X * eta) * (kxh[k][r1][links[i][1]] + beta) / (nhsum[k][r1] + H * beta);
+
+				}
+			}
+
+		}
+
+		double[] pr_sum = new double[K * X * X];
+
+		for (int k = 0; k < K; k++) {
+
+			for (int r = 0; r < X; r++) {
+
+				for (int r1 = 0; r1 < X; r1++) {
+
+					pr_sum[k * X * X + r * X + r1] = pr[k][r][r1];
+
+				}
+
+			}
+
+		}
+
+		int index = sample(pr_sum);
+
+		topic = index / (X * X);
+
+		x_links[i][0] = (index - topic * X * X) / X;
+
+		x_links[i][1] = index % X;
+
+		// System.out.println(index + "\t" + topic + "\t" + x_links[i][0] + "\t"
+		// + x_links[i][1]);
+
+		updateLinkEntityCount(topic, x_links[i], links[i], +1);
+
+		return topic;
+
+	}
+
 	int sample(double[] p) {
 
 		int topic = 0;
@@ -267,6 +470,36 @@ public class PTM {
 		nhsum[treatment][jczs] += flag;
 		nxsum[treatment] += flag;
 
+	}
+
+	void updateLinkEntityCount(int treatment, int[] role, int[] link, int flag) {
+
+		nlinks[treatment] += flag;
+
+		kxh[treatment][role[0]][link[0]] += flag;
+		nhsum[treatment][role[0]] += flag;
+		nxsum[treatment] += flag;
+
+		kxh[treatment][role[1]][link[1]] += flag;
+		nhsum[treatment][role[1]] += flag;
+		nxsum[treatment] += flag;
+
+	}
+
+	void updateHerbSymptomLinkCount(int treatment, int role, int[] herb_symptom_link, int flag) {
+
+		n_treat_links[treatment] += flag;
+
+		// 0 is herb
+
+		kxh[treatment][role][herb_symptom_link[0]] += flag;
+		nhsum[treatment][role] += flag;
+		nxsum[treatment] += flag;
+
+		// 1 is symptom
+
+		ns[herb_symptom_link[1]][treatment] += flag;
+		nssum[treatment] += flag;
 	}
 
 	public double[][] estimateTheta() {

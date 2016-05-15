@@ -12,7 +12,7 @@ public class TopicPrecisionSymToHerb {
 
 	public static void main(String[] args) throws IOException {
 
-		String topic_file = "result//topic_atm_40.txt";
+		String topic_file = "result//topic_ptm_3d(c)_15.txt";
 
 		Map<String, String> symptom_herb = getSymptomHerbKnowledge("data//symptom_herb_tcm_mesh.txt");
 
@@ -21,6 +21,10 @@ public class TopicPrecisionSymToHerb {
 		File f = new File(topic_file);
 		BufferedReader reader = new BufferedReader(new InputStreamReader(new FileInputStream(f), "UTF-8"));
 		String line = "";
+
+		int count = 0;
+
+		int line_count = 0;
 
 		while ((line = reader.readLine()) != null) {
 
@@ -40,8 +44,6 @@ public class TopicPrecisionSymToHerb {
 
 			}
 
-			int count = 0;
-
 			String herb_set = herb_str.toString();
 
 			for (int h = 0; h < herbs.length; h++) {
@@ -52,9 +54,11 @@ public class TopicPrecisionSymToHerb {
 
 			}
 
-			System.out.println((double) count / herbs.length);
+			line_count++;
 
 		}
+
+		System.out.println((double) count / (10 * line_count));
 
 		reader.close();
 

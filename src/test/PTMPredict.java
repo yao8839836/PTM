@@ -25,7 +25,7 @@ public class PTMPredict {
 
 		PTM ptm = new PTM(herbs_train, symptoms_train, herbs_list.size(), symptoms_list.size());
 
-		int K = 5;
+		int K = 15;
 		double alpha = 1;
 		double beta = 0.1;
 		double beta_bar = 0.1;

@@ -26,7 +26,7 @@ public class RunPTMMustLink {
 
 		PTMMustLink linklda = new PTMMustLink(herbs, symptoms, herbs_list.size(), symptoms_list.size(), links);
 
-		int K = 30;
+		int K = 25;
 		double alpha = 1;
 		double alpha_l = 1;
 		double beta = 0.1;
@@ -87,7 +87,7 @@ public class RunPTMMustLink {
 
 		}
 
-		String filename = "result//topic_ptm_3d(b).txt";
+		String filename = "result//topic_ptm_3d(b)_25.txt";
 		ReadWriteFile.writeFile(filename, sb.toString());
 	}
 

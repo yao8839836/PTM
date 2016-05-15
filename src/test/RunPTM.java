@@ -22,7 +22,7 @@ public class RunPTM {
 
 		PTM linklda = new PTM(herbs, symptoms, herbs_list.size(), symptoms_list.size());
 
-		int K = 30;
+		int K = 25;
 		double alpha = 1;
 		double beta = 0.1;
 		double beta_bar = 0.1;
@@ -31,6 +31,31 @@ public class RunPTM {
 		int iterations = 1000;
 
 		linklda.markovChain(K, alpha, beta, beta_bar, eta, iterations);
+
+		// int[][] role = linklda.x;
+		// for (int[] x_p : role) {
+		// for (int x_pn : x_p) {
+		// System.out.print(x_pn + " ");
+		// }
+		// System.out.println();
+		// }
+		// int[][] treat = linklda.treatment;
+		//
+		// for (int[] z_p : treat) {
+		// for (int x_pn : z_p) {
+		// System.out.print(x_pn + " ");
+		// }
+		// System.out.println();
+		// }
+
+		int[][] syndrome = linklda.syndrome;
+
+		for (int[] z_p : syndrome) {
+			for (int x_pn : z_p) {
+				System.out.print(x_pn + " ");
+			}
+			System.out.println();
+		}
 
 		double[][] phi_bar = linklda.estimatePhiBar();
 
@@ -82,7 +107,7 @@ public class RunPTM {
 
 		}
 
-		String filename = "result//topic_ptm_3d(a).txt";
+		String filename = "result//topic_ptm_3d(a)_25.txt";
 		ReadWriteFile.writeFile(filename, sb.toString());
 	}
 

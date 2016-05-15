@@ -22,7 +22,7 @@ public class RunLinkLDA {
 
 		LinkLDA linklda = new LinkLDA(herbs, symptoms, herbs_list.size(), symptoms_list.size());
 
-		int K = 20;
+		int K = 25;
 		double alpha = 1;
 		double beta = 0.1;
 		double beta_bar = 0.1;
@@ -74,7 +74,7 @@ public class RunLinkLDA {
 
 		}
 
-		String filename = "result//topic_link_lda.txt";
+		String filename = "result//topic_link_lda_25.txt";
 		ReadWriteFile.writeFile(filename, sb.toString());
 	}
 

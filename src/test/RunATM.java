@@ -22,9 +22,9 @@ public class RunATM {
 
 		ATM atm = new ATM(symptoms, herbs, symptoms_list.size(), herbs_list.size());
 
-		int K = 30;
+		int K = 25;
 		double alpha = (double) 50 / K;
-		double beta = 0.1;
+		double beta = 0.01;
 
 		int iterations = 1000;
 
@@ -77,7 +77,7 @@ public class RunATM {
 
 		}
 
-		String filename = "result//topic_atm_30.txt";
+		String filename = "result//topic_atm_25.txt";
 		ReadWriteFile.writeFile(filename, sb.toString());
 
 	}
