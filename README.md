@@ -1,5 +1,5 @@
 # PTM
-A Topic Model for Traditional Chinese Medicine Presciptions
+A Topic Model for Traditional Chinese Medicine Prescriptions
 
 #Require
 Java 7 or above, I use Java 8 in this project.
