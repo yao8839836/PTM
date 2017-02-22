@@ -12,7 +12,7 @@ import java.util.Set;
 
 public class TopicKnowCoherence {
 
-	public static void main(String[] args) throws IOException, IOException {
+	public static String main(String[] args) throws IOException, IOException {
 
 		Map<String, Set<String>> herb_category = getCategory("file//herb_category.txt");
 
@@ -22,7 +22,7 @@ public class TopicKnowCoherence {
 
 		System.out.println(symptom_category);
 
-		String topic_file = "result//topic_atm.txt";
+		String topic_file = args[0];
 
 		File f = new File(topic_file);
 
@@ -117,6 +117,8 @@ public class TopicKnowCoherence {
 		System.out.println(symptom_coherence / line_count);
 
 		reader.close();
+
+		return symptom_coherence / line_count + "";
 
 	}
 

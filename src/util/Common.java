@@ -130,4 +130,53 @@ public class Common {
 		return obj;
 	}
 
+	/**
+	 * 换底公式
+	 * 
+	 * @param value
+	 *            值
+	 * @param base
+	 *            底
+	 * @return
+	 */
+	public static double log(double value, double base) {
+		return Math.log(value) / Math.log(base);
+	}
+
+	/**
+	 * 以2为底对数
+	 * 
+	 * @param value
+	 *            值
+	 * @return
+	 */
+	public static double log2(double value) {
+
+		return log(value, 2);
+	}
+
+	/**
+	 * 从多项式概率分布p中采样一项
+	 * 
+	 * @param p
+	 * @return
+	 */
+	public static int sample(double[] p) {
+
+		int topic = 0;
+
+		for (int k = 1; k < p.length; k++) {
+			p[k] += p[k - 1];
+		}
+		double u = Math.random() * p[p.length - 1];
+		for (int t = 0; t < p.length; t++) {
+			if (u < p[t]) {
+				topic = t;
+				break;
+			}
+		}
+
+		return topic;
+	}
+
 }

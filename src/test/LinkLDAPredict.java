@@ -6,46 +6,84 @@ import java.util.List;
 import topic.LinkLDA;
 import util.Corpus;
 import util.Evaluation;
+import util.ReadWriteFile;
 
 public class LinkLDAPredict {
 
 	public static void main(String[] args) throws IOException {
 
-		List<String> herbs_list = Corpus.getVocab("data//herbs_contains.txt");
+		StringBuilder sb = new StringBuilder();
 
-		List<String> symptoms_list = Corpus.getVocab("data//symptom_contains.txt");
+		int K = 15;
 
-		int[][] herbs_train = Corpus.getDocuments("file//pre_herbs_train.txt");
+		int N = 5;
 
-		int[][] symptoms_train = Corpus.getDocuments("file//pre_symptoms_train.txt");
+		for (int i = 0; i < 10; i++) {
 
-		int[][] herbs_test = Corpus.getDocuments("file//pre_herbs_test.txt");
+			List<String> herbs_list = Corpus.getVocab("data//herbs_contains.txt");
 
-		int[][] symptoms_test = Corpus.getDocuments("file//pre_symptoms_test.txt");
+			List<String> symptoms_list = Corpus.getVocab("data//symptom_contains.txt");
 
-		LinkLDA linklda = new LinkLDA(herbs_train, symptoms_train, herbs_list.size(), symptoms_list.size());
+			int[][] herbs_train = Corpus.getDocuments("file//pre_herbs_train.txt");
 
-		int K = 5;
-		double alpha = 1;
-		double beta = 0.1;
-		double beta_bar = 0.1;
-		int iterations = 1000;
+			int[][] symptoms_train = Corpus.getDocuments("file//pre_symptoms_train.txt");
 
-		linklda.markovChain(K, alpha, beta, beta_bar, iterations);
+			int[][] herbs_test = Corpus.getDocuments("file//pre_herbs_test.txt");
 
-		double[][] herb_topic = linklda.estimatePhi();
+			int[][] symptoms_test = Corpus.getDocuments("file//pre_symptoms_test.txt");
 
-		double[][] symptom_topic = linklda.estimatePhiBar();
+			LinkLDA linklda = new LinkLDA(herbs_train, symptoms_train, herbs_list.size(), symptoms_list.size());
 
-		double symptom_perplexity = Evaluation.link_lda_symptom_predictive_perplexity(herbs_test, symptoms_test,
-				herb_topic, symptom_topic);
+			double alpha = 1;
+			double beta = 0.1;
+			double beta_bar = 0.1;
+			int iterations = 1000;
 
-		System.out.println("LinkLDA symptom predictive perplexity : " + symptom_perplexity);
+			linklda.markovChain(K, alpha, beta, beta_bar, iterations);
 
-		double herb_perplexity = Evaluation.link_lda_herb_predictive_perplexity(herbs_test, symptoms_test, herb_topic,
-				symptom_topic);
+			double[][] herb_topic = linklda.estimatePhi();
 
-		System.out.println("LinkLDA herb predictive perplexity : " + herb_perplexity);
+			double[][] symptom_topic = linklda.estimatePhiBar();
+
+			double symptom_perplexity = Evaluation.link_lda_symptom_predictive_perplexity(herbs_test, symptoms_test,
+					herb_topic, symptom_topic);
+
+			System.out.println("LinkLDA symptom predictive perplexity : " + symptom_perplexity);
+
+			double symptom_precision_k = Evaluation.link_lda_symptom_precision_k(herbs_test, symptoms_test, herb_topic,
+					symptom_topic, N);
+			System.out.println("LinkLDA symptom precision@" + N + ": " + symptom_precision_k);
+
+			double symptom_recall_k = Evaluation.link_lda_symptom_recall_k(herbs_test, symptoms_test, herb_topic,
+					symptom_topic, N);
+			System.out.println("LinkLDA symptom recall@" + N + ": " + symptom_recall_k);
+
+			double symptom_ndcg_k = Evaluation.link_lda_symptom_ndcg(herbs_test, symptoms_test, herb_topic,
+					symptom_topic, N);
+			System.out.println("LinkLDA symptom NDCG@" + N + ": " + symptom_ndcg_k);
+
+			double herb_perplexity = Evaluation.link_lda_herb_predictive_perplexity(herbs_test, symptoms_test,
+					herb_topic, symptom_topic);
+			System.out.println("LinkLDA herb predictive perplexity : " + herb_perplexity);
+
+			double herb_precision_k = Evaluation.link_lda_herb_precision_k(herbs_test, symptoms_test, herb_topic,
+					symptom_topic, N);
+			System.out.println("LinkLDA herb precision@" + N + ": " + herb_precision_k);
+
+			double herb_recall_k = Evaluation.link_lda_herb_recall_k(herbs_test, symptoms_test, herb_topic,
+					symptom_topic, N);
+			System.out.println("LinkLDA herb recall@" + N + ": " + herb_recall_k);
+
+			double herb_ndcg_k = Evaluation.link_lda_herb_ndcg(herbs_test, symptoms_test, herb_topic, symptom_topic, N);
+			System.out.println("LinkLDA herb NDCG@" + N + ": " + herb_ndcg_k);
+
+			sb.append(herb_perplexity + "," + herb_precision_k + "," + symptom_perplexity + "," + symptom_precision_k
+					+ "\n");
+
+		}
+
+		ReadWriteFile.writeFile("file//linklda_" + K + "_" + N + ".csv", sb.toString());
+
 	}
 
 }

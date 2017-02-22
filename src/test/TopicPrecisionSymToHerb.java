@@ -6,13 +6,15 @@ import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.Map;
+import java.util.Set;
 
 public class TopicPrecisionSymToHerb {
 
-	public static void main(String[] args) throws IOException {
+	public static String main(String[] args) throws IOException {
 
-		String topic_file = "result//topic_ptm_3d(c)_15.txt";
+		String topic_file = args[0];
 
 		Map<String, String> symptom_herb = getSymptomHerbKnowledge("data//symptom_herb_tcm_mesh.txt");
 
@@ -58,9 +60,12 @@ public class TopicPrecisionSymToHerb {
 
 		}
 
-		System.out.println((double) count / (10 * line_count));
+		double precision = (double) count / (10 * line_count);
+		System.out.println(precision);
 
 		reader.close();
+
+		return precision + "";
 
 	}
 
@@ -89,6 +94,48 @@ public class TopicPrecisionSymToHerb {
 			if (temp.length == 2)
 
 				symptom_herb.put(temp[0], temp[1]);
+
+		}
+
+		reader.close();
+
+		return symptom_herb;
+	}
+
+	/**
+	 * 单味药的症状知识
+	 * 
+	 * @param filename
+	 * @return
+	 * @throws IOException
+	 * 
+	 */
+	public static Map<String, Set<String>> getSymptomHerbSetKnowledge(String filename) throws IOException {
+
+		File f = new File(filename);
+		BufferedReader reader = new BufferedReader(new InputStreamReader(new FileInputStream(f), "UTF-8"));
+		String line = "";
+
+		Map<String, Set<String>> symptom_herb = new HashMap<>();
+
+		while ((line = reader.readLine()) != null) {
+
+			System.out.println(line);
+
+			String[] temp = line.split("\t");
+
+			if (temp.length == 2) {
+
+				Set<String> herb_set = new HashSet<>();
+
+				String[] herbs = temp[1].split(" ");
+
+				for (String herb : herbs) {
+
+					herb_set.add(herb);
+				}
+				symptom_herb.put(temp[0], herb_set);
+			}
 
 		}
 

@@ -1,5 +1,12 @@
 package topic;
 
+/**
+ * Author Topic Model GibbsSampling
+ * 
+ * @author: Liang Yao
+ * @email yaoliang@zju.edu.cn
+ */
+
 public class ATM {
 
 	int[][] documents;
