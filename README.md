@@ -25,23 +25,23 @@ Symptom Category: /file/symptom_category.txt
 
 #Demo
 
-PTM(a): /src/test/RunPTM.java
+PTM(a): /src/test/RunPTMa.java
 
-PTM(b): /src/test/RunPTMMustLink.java
+PTM(b): /src/test/RunPTMb.java
 
-PTM(c): /src/test/RunPTMTreat.java
+PTM(c): /src/test/RunPTMc.java
 
-PTM(d): /src/test/RunPTMTreatMust.java
+PTM(d): /src/test/RunPTMd.java
 
 #Herbs and symptoms prediction tasks
 
-PTM(a): /src/test/PTMPredict.java
+PTM(a): /src/test/PTMaPredict.java
 
-PTM(b): /src/test/PTMMustPredict.java
+PTM(b): /src/test/PTMbPredict.java
 
-PTM(c): /src/test/PTMTreatPredict.java
+PTM(c): /src/test/PTMcPredict.java
 
-PTM(d): /src/test/PTMTreatMustPredict.java
+PTM(d): /src/test/PTMTdPredict.java
 
 # Topic herb precision
 
