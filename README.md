@@ -41,7 +41,7 @@ PTM(b): /src/test/PTMbPredict.java
 
 PTM(c): /src/test/PTMcPredict.java
 
-PTM(d): /src/test/PTMTdPredict.java
+PTM(d): /src/test/PTMdPredict.java
 
 # Topic herb precision
 
