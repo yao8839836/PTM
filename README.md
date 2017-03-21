@@ -1,13 +1,13 @@
 # PTM
 A Topic Model for Traditional Chinese Medicine Prescriptions
 
-#Require
+# Require
 Java 7 or above, I use Java 8 in this project.
 
 Eclipse
 
 
-#Data
+# Data
 
 All 33,765 prescriptions: /file/pre_herbs.txt, file/pre_symptoms.txt
 
@@ -23,7 +23,7 @@ TCM MeSH herb-symptom correspondence knowledge: /data/symptom_herb_tcm_mesh.txt
 
 Symptom Category: /file/symptom_category.txt
 
-#Demo
+# Demo
 
 PTM(a): /src/test/RunPTMa.java
 
