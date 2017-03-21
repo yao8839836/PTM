@@ -33,7 +33,7 @@ PTM(c): /src/test/RunPTMc.java
 
 PTM(d): /src/test/RunPTMd.java
 
-#Herbs and symptoms prediction tasks
+# Herbs and symptoms prediction tasks
 
 PTM(a): /src/test/PTMaPredict.java
 
