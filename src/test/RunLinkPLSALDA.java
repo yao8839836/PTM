@@ -15,7 +15,7 @@ public class RunLinkPLSALDA {
 
 		StringBuilder sb_str = new StringBuilder();
 
-		int K = 10;
+		int K = 25;
 
 		for (int iter = 0; iter < 10; iter++) {
 

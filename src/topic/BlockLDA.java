@@ -252,6 +252,9 @@ public class BlockLDA {
 
 		updateLinkEntityCount(topic_0, topic_1, links[i], +1);
 
+		topic_pair[0] = topic_0;
+		topic_pair[1] = topic_1;
+
 		return topic_pair;
 
 	}

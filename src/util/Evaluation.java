@@ -9,6 +9,232 @@ import java.util.Set;
 public class Evaluation {
 
 	/**
+	 * LinkLDA的predictive perplexity (including both symptoms and herbs)
+	 * 
+	 * @param test_herbs
+	 * @param test_symptoms
+	 * @param herb_topic
+	 * @param symptom_topic
+	 * @return
+	 */
+	public static double link_lda_predictive_perplexity(int[][] test_herbs, int[][] test_symptoms,
+			double[][] herb_topic, double[][] symptom_topic, double alpha, int iterations) {
+
+		int K = herb_topic.length;
+
+		int[][] nd = new int[test_herbs.length][K];
+
+		double[][] theta_test = new double[test_herbs.length][K];
+
+		int[][] syndrome = new int[test_symptoms.length][];
+
+		int[][] treatment = new int[test_herbs.length][];
+
+		// 随机初始化测试集的隐变量
+		for (int p = 0; p < test_herbs.length; p++) {
+
+			treatment[p] = new int[test_herbs[p].length];
+
+			for (int h = 0; h < test_herbs[p].length; h++) {
+
+				int topic = (int) (Math.random() * K);
+
+				treatment[p][h] = topic;
+
+				nd[p][topic]++;
+
+			}
+
+			syndrome[p] = new int[test_symptoms[p].length];
+
+			for (int s = 0; s < test_symptoms[p].length; s++) {
+
+				int topic = (int) (Math.random() * K);
+
+				syndrome[p][s] = topic;
+
+				nd[p][topic]++;
+
+			}
+
+		}
+
+		// 迭代若干次，采样隐变量
+		for (int iter = 0; iter < iterations; iter++) {
+
+			for (int p = 0; p < test_herbs.length; p++) {
+
+				for (int h = 0; h < test_herbs[p].length; h++) {
+
+					nd[p][treatment[p][h]]--;
+
+					double[] pr = new double[K];
+
+					for (int k = 0; k < K; k++) {
+
+						pr[k] = (nd[p][k] + alpha) / (test_herbs[p].length + test_symptoms[p].length + K * alpha)
+								* herb_topic[k][test_herbs[p][h]];
+
+					}
+
+					int topic = Common.sample(pr);
+
+					treatment[p][h] = topic;
+
+					nd[p][treatment[p][h]]++;
+
+				}
+
+				for (int s = 0; s < test_symptoms[p].length; s++) {
+
+					nd[p][syndrome[p][s]]--;
+
+					double[] pr = new double[K];
+
+					for (int k = 0; k < K; k++) {
+
+						pr[k] = (nd[p][k] + alpha) / (test_herbs[p].length + test_symptoms[p].length + K * alpha)
+								* symptom_topic[k][test_symptoms[p][s]];
+
+					}
+
+					int topic = Common.sample(pr);
+
+					syndrome[p][s] = topic;
+
+					nd[p][syndrome[p][s]]++;
+
+				}
+
+			}
+
+		}
+		// 估计测试集theta
+		for (int p = 0; p < test_herbs.length; p++) {
+
+			for (int k = 0; k < K; k++) {
+
+				theta_test[p][k] = (nd[p][k] + alpha) / (test_herbs[p].length + test_symptoms[p].length + K * alpha);
+
+			}
+
+		}
+
+		// 计算预测困惑度
+		double perplexity = 0;
+
+		int denominator = 0;
+
+		for (int p = 0; p < test_herbs.length; p++) {
+
+			denominator += (test_symptoms[p].length + test_herbs[p].length);
+
+		}
+
+		double numerator = 0;
+
+		for (int p = 0; p < test_herbs.length; p++) {
+
+			for (int h = 0; h < test_herbs[p].length; h++) {
+
+				double prob = 0;
+
+				for (int k = 0; k < K; k++) {
+
+					prob += theta_test[p][k] * herb_topic[k][test_herbs[p][h]];
+
+				}
+
+				numerator += Math.log(prob);
+
+			}
+
+			for (int s = 0; s < test_symptoms[p].length; s++) {
+
+				double prob = 0;
+
+				for (int k = 0; k < K; k++) {
+
+					prob += theta_test[p][k] * symptom_topic[k][test_symptoms[p][s]];
+
+				}
+
+				numerator += Math.log(prob);
+
+			}
+
+		}
+
+		perplexity = Math.exp(-numerator / denominator);
+
+		return perplexity;
+	}
+
+	/**
+	 * 
+	 * LinkLDA的training perplexity (including both symptoms and herbs)
+	 * 
+	 * @param herbs
+	 * @param symptoms
+	 * @param herb_topic
+	 * @param symptom_topic
+	 * @param prescription_topic
+	 * @return
+	 */
+	public static double link_lda_training_perplexity(int[][] herbs, int[][] symptoms, double[][] herb_topic,
+			double[][] symptom_topic, double[][] prescription_topic) {
+
+		double perplexity = 0;
+
+		int denominator = 0;
+
+		for (int p = 0; p < herbs.length; p++) {
+
+			denominator += (symptoms[p].length + herbs[p].length);
+
+		}
+
+		double numerator = 0;
+
+		for (int p = 0; p < herbs.length; p++) {
+
+			for (int h = 0; h < herbs[p].length; h++) {
+
+				double prob = 0;
+
+				for (int k = 0; k < herb_topic.length; k++) {
+
+					prob += prescription_topic[p][k] * herb_topic[k][herbs[p][h]];
+
+				}
+
+				numerator += Math.log(prob);
+
+			}
+
+			for (int s = 0; s < symptoms[p].length; s++) {
+
+				double prob = 0;
+
+				for (int k = 0; k < symptom_topic.length; k++) {
+
+					prob += prescription_topic[p][k] * symptom_topic[k][symptoms[p][s]];
+
+				}
+
+				numerator += Math.log(prob);
+
+			}
+
+		}
+
+		perplexity = Math.exp(-numerator / denominator);
+
+		return perplexity;
+
+	}
+
+	/**
 	 * LinkLDA症状预测效果
 	 * 
 	 * @param test_herbs
@@ -40,6 +266,7 @@ public class Evaluation {
 
 			double prob = link_lda_symptom_predictive_probability(test_herbs[i], test_symptoms[i], herb_topic,
 					symptom_topic);
+			// System.out.println(prob);
 
 			numerator += Math.log(prob);
 
@@ -317,34 +544,9 @@ public class Evaluation {
 
 		for (int m = 0; m < test_symptom.length; m++) {
 
-			double sum = 0;
-
 			int symptom = test_symptom[m];
 
-			for (int n = 0; n < test_herb.length; n++) {
-
-				int herb = test_herb[n];
-
-				for (int k = 0; k < symptom_topic.length; k++) {
-
-					double phi_bar = symptom_topic[k][symptom];
-
-					double phi = herb_topic[k][herb];
-
-					double sum_1 = 0;
-
-					for (int k_1 = 0; k_1 < herb_topic.length; k_1++) {
-
-						sum_1 += herb_topic[k_1][herb];
-
-					}
-
-					sum += phi_bar * phi / sum_1;
-
-				}
-
-			}
-			sum /= test_herb.length;
+			double sum = link_lda_symptom_predictive_probability(test_herb, symptom, herb_topic, symptom_topic);
 
 			prod *= sum;
 		}

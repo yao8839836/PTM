@@ -11,13 +11,13 @@ import util.Corpus;
 import util.Evaluation;
 import util.ReadWriteFile;
 
-public class BlockLDAPredit {
+public class BlockLDAPredict {
 
 	public static void main(String[] args) throws IOException {
 
 		StringBuilder sb = new StringBuilder();
 
-		int K = 15;
+		int K = 20;
 
 		int N = 5;
 
@@ -51,7 +51,33 @@ public class BlockLDAPredit {
 
 			double[][] herb_topic = blda.estimatePhi();
 
+			for (int k = 0; k < herb_topic.length; k++) {
+
+				double sum = 0;
+				for (int s = 0; s < herb_topic[0].length; s++) {
+
+					sum += herb_topic[k][s];
+
+					if (herb_topic[k][s] < 0)
+						System.out.println("主题-药物概率为负");
+				}
+				System.out.println(sum);
+			}
+
 			double[][] symptom_topic = blda.estimatePhiBar();
+
+			for (int k = 0; k < symptom_topic.length; k++) {
+
+				double sum = 0;
+				for (int s = 0; s < symptom_topic[0].length; s++) {
+
+					sum += symptom_topic[k][s];
+
+					if (symptom_topic[k][s] < 0)
+						System.out.println("主题-症状概率为负");
+				}
+				System.out.println(sum);
+			}
 
 			double symptom_perplexity = Evaluation.link_lda_symptom_predictive_perplexity(herbs_test, symptoms_test,
 					herb_topic, symptom_topic);
@@ -86,7 +112,6 @@ public class BlockLDAPredit {
 
 			sb.append(herb_perplexity + "," + herb_precision_k + "," + symptom_perplexity + "," + symptom_precision_k
 					+ "\n");
-
 		}
 
 		ReadWriteFile.writeFile("file//blocklda_" + K + "_" + N + ".csv", sb.toString());

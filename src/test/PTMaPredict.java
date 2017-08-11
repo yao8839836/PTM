@@ -14,7 +14,7 @@ public class PTMaPredict {
 
 		StringBuilder sb = new StringBuilder();
 
-		int K = 15;
+		int K = 20;
 
 		int N = 5;
 
@@ -89,7 +89,6 @@ public class PTMaPredict {
 					prescription_topic_role, prescription_topic, N);
 
 			System.out.println("PTM(a) herb NDCG@" + N + ": " + herb_ndcg_k);
-
 			sb.append(herb_perplexity + "," + herb_precision_k + "," + symptom_perplexity + "," + symptom_precision_k
 					+ "\n");
 

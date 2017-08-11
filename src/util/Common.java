@@ -164,7 +164,6 @@ public class Common {
 	public static int sample(double[] p) {
 
 		int topic = 0;
-
 		for (int k = 1; k < p.length; k++) {
 			p[k] += p[k - 1];
 		}
@@ -175,7 +174,6 @@ public class Common {
 				break;
 			}
 		}
-
 		return topic;
 	}
 

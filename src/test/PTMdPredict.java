@@ -16,7 +16,7 @@ public class PTMdPredict {
 
 		StringBuilder sb = new StringBuilder();
 
-		int K = 15;
+		int K = 20;
 
 		int N = 5;
 

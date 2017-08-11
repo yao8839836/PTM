@@ -20,7 +20,7 @@ public class TopicSymKnowCoShow {
 
 		System.out.println(symptom_category);
 
-		String topic_file = "result//topic_corr_lda_15.txt";
+		String topic_file = "result//blocklda_topic_25.txt";
 
 		File f = new File(topic_file);
 
@@ -35,13 +35,16 @@ public class TopicSymKnowCoShow {
 
 			String[] symptoms_str = temp[1].split(" ");
 
-			for (int i = 1; i < symptoms_str.length; i++) {
+			for (int i = 0; i < symptoms_str.length; i++) {
 
 				Set<String> categories_i = symptom_category.get(symptoms_str[i]);
 
 				boolean mark = false;
 
-				for (int j = 0; j < i; j++) {
+				for (int j = 0; j < symptoms_str.length; j++) {
+
+					if (i == j)
+						continue;
 
 					Set<String> categories_j = symptom_category.get(symptoms_str[j]);
 
@@ -74,7 +77,7 @@ public class TopicSymKnowCoShow {
 
 		reader.close();
 
-		ReadWriteFile.writeFile("result//topic_ptm_3d(d)_25_sym_pre.txt", sb.toString());
+		ReadWriteFile.writeFile("result//blocklda_topic_25_sym_pre.txt", sb.toString());
 	}
 
 	/**

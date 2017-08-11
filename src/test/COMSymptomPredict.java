@@ -16,7 +16,7 @@ public class COMSymptomPredict {
 
 		StringBuilder sb = new StringBuilder();
 
-		int K = 15;
+		int K = 20;
 
 		int top_k = 5;
 

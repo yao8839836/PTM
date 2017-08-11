@@ -14,7 +14,7 @@ public class RunLinkLDA {
 
 		StringBuilder sb_str = new StringBuilder();
 
-		int K = 15;
+		int K = 25;
 
 		for (int iter = 0; iter < 10; iter++) {
 
