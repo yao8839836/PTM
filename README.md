@@ -15,7 +15,7 @@ Training set: /file/pre_herbs_train.txt, /file/pre_symptoms_train.txt
 
 Test set: /file/pre_herbs_test.txt, /file/pre_symptoms_test.txt
 
-(Note: Each number in above files means an herb or a symptom, each number is a index of the following herb list or the symptom list. For example, '5' in /file/pre_herbs_train.txt means the 5th herb in the herb list /data/herbs_contains.txt)
+(Note: Each number in above files means an herb or a symptom, each number is an index of the following herb list or symptom list. For example, '5' in /file/pre_herbs_train.txt means the 5th herb in the herb list /data/herbs_contains.txt, '17' in /file/pre_symptoms_train.txt means the 17th symptom in the symptom list /data/symptom_contains.txt. )
 
 Herb list: /data/herbs_contains.txt
 
