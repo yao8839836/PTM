@@ -1,5 +1,8 @@
 # PTM
-A Topic Model for Traditional Chinese Medicine Prescriptions
+
+The implementation of Prescription Topic Model in our paper:
+
+Liang Yao, Yin Zhang, Baogang Wei, Wenjin Zhang, Zhe Jin. A Topic Modeling Approach for Traditional Chinese Medicine Prescriptions. IEEE Transactions on Knowledge and Data Engineering (TKDE), accepted.
 
 # Require
 Java 7 or above, I use Java 8 in this project.
