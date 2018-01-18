@@ -51,6 +51,16 @@ PTM(d): /src/test/PTMdPredict.java
 # Topic herb precision
 
 /src/test/TopicPrecisionSymToHerb.java
+
+# Prescription predictive perplexity
+
+PTM(a): src/perplexity/PTMaPerplexity.java
+
+PTM(b): src/perplexity/PTMbPerplexity.java
+
+PTM(c): src/perplexity/PTMcPerplexity.java
+
+PTM(d): src/perplexity/PTMdPerplexity.java
  
 # Topic symptom coherence
 
