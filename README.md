@@ -2,7 +2,7 @@
 
 The implementation of Prescription Topic Model in our paper:
 
-Liang Yao, Yin Zhang, Baogang Wei, Wenjin Zhang, Zhe Jin. A Topic Modeling Approach for Traditional Chinese Medicine Prescriptions. IEEE Transactions on Knowledge and Data Engineering (TKDE), 2018.
+Liang Yao, Yin Zhang, Baogang Wei, Wenjin Zhang, Zhe Jin. A Topic Modeling Approach for Traditional Chinese Medicine Prescriptions. IEEE Transactions on Knowledge and Data Engineering (TKDE), 2018. doi: 10.1109/TKDE.2017.2787158
 
 # Require
 Java 7 or above, I use Java 8 in this project.
