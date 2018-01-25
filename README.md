@@ -30,7 +30,7 @@ Symptom Category: /file/symptom_category.txt
 
 # Demo
 
-PTM(a): /src/test/RunPTMa.java
+PTM(a): /src/test/RunPTMa.java (reproducing prescribing patterns discovery results)
 
 PTM(b): /src/test/RunPTMb.java
 
@@ -38,7 +38,8 @@ PTM(c): /src/test/RunPTMc.java
 
 PTM(d): /src/test/RunPTMd.java
 
-# Herbs and symptoms prediction tasks
+# Herbs and symptoms prediction/recommendation tasks 
+(reproducing herbs/symptoms predictive perplexity and precision@N results)
 
 PTM(a): /src/test/PTMaPredict.java
 
