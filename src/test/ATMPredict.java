@@ -81,6 +81,7 @@ public class ATMPredict {
 					+ "\n");
 
 		}
+		
 
 		ReadWriteFile.writeFile("file//atm_" + K + "_" + N + ".csv", sb.toString());
 
