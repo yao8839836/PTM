@@ -1,6 +1,6 @@
 # PTM
 
-The implementation of Prescription Topic Model in our paper:
+The dataset and implementation of Prescription Topic Model in our paper:
 
 Liang Yao, Yin Zhang, Baogang Wei, Wenjin Zhang, Zhe Jin. "A Topic Modeling Approach for Traditional Chinese Medicine Prescriptions". IEEE Transactions on Knowledge and Data Engineering (TKDE), 2018. DOI:10.1109/TKDE.2017.2787158
 
