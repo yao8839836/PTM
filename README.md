@@ -13,7 +13,7 @@ Eclipse
 
 # Data
 
-98,336 raw prescriptions with herbs and symptoms are in /data/prescriptions.txt .
+98,334 raw prescriptions with herbs and symptoms are in /data/prescriptions.txt .
 
 All 33,765 prescriptions: /file/pre_herbs.txt, file/pre_symptoms.txt. 
 
