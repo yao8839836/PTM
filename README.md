@@ -15,7 +15,7 @@ Eclipse
 
 98,334 raw prescriptions with herbs and symptoms are in /data/prescriptions.txt .
 
-All 33,765 prescriptions: /file/pre_herbs.txt, file/pre_symptoms.txt. 
+The preprocessed 33,765 prescriptions: /file/pre_herbs.txt, file/pre_symptoms.txt. 
 
 Training set: /file/pre_herbs_train.txt, /file/pre_symptoms_train.txt
 
