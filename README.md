@@ -29,7 +29,7 @@ Symptom list: /data/symptom_contains.txt
 
 TCM MeSH herb-symptom correspondence knowledge: /data/symptom_herb_tcm_mesh.txt
 
-Symptom Category: /file/symptom_category.txt
+Symptom Category: /data/symptom_category.txt
 
 # Demo
 
