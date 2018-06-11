@@ -13,13 +13,13 @@ Eclipse
 
 # Data
 
-98,334 raw prescriptions with herbs and symptoms are in /data/prescriptions.txt .
+98,334 raw prescriptions with herbs and symptoms are in /data/prescriptions.txt . Each line is for a prescription, symptoms are on the left and herbs are on the right.
 
-The preprocessed 33,765 prescriptions: /file/pre_herbs.txt, file/pre_symptoms.txt. 
+The preprocessed 33,765 prescriptions: /data/pre_herbs.txt, /data/pre_symptoms.txt. 
 
-Training set: /file/pre_herbs_train.txt, /file/pre_symptoms_train.txt
+Training set: /data/pre_herbs_train.txt, /data/pre_symptoms_train.txt
 
-Test set: /file/pre_herbs_test.txt, /file/pre_symptoms_test.txt
+Test set: /data/pre_herbs_test.txt, /data/pre_symptoms_test.txt
 
 (Note: Each number in above files means an herb or a symptom, each number is an index of the following herb list or symptom list. For example, '5' in /file/pre_herbs_train.txt means the 6th herb in the herb list /data/herbs_contains.txt, '17' in /file/pre_symptoms_train.txt means the 18th symptom in the symptom list /data/symptom_contains.txt. )
 
