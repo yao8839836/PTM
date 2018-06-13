@@ -13,23 +13,23 @@ Eclipse
 
 # Data
 
-98,334 raw prescriptions with herbs and symptoms are in /data/prescriptions.txt . Each line is for a prescription, symptoms are on the left and herbs are on the right.
+98,334 raw prescriptions with herbs and symptoms are in `/data/prescriptions.txt` . Each line is for a prescription, symptoms are on the left and herbs are on the right.
 
-The preprocessed 33,765 prescriptions: /data/pre_herbs.txt, /data/pre_symptoms.txt. 
+The preprocessed 33,765 prescriptions: `/data/pre_herbs.txt`, `/data/pre_symptoms.txt`. 
 
-`Training set`: /data/pre_herbs_train.txt, /data/pre_symptoms_train.txt
+`Training set`: `/data/pre_herbs_train.txt`, `/data/pre_symptoms_train.txt`
 
-`Test set`: /data/pre_herbs_test.txt, /data/pre_symptoms_test.txt
+`Test set`: `/data/pre_herbs_test.txt`, `/data/pre_symptoms_test.txt`
 
 (Note: Each line in above files is for a prescription. Each number in above files means an herb or a symptom, each number is an index of the following herb list or symptom list. For example, '5' in /file/pre_herbs_train.txt means the 6th herb in the herb list /data/herbs_contains.txt, '17' in /file/pre_symptoms_train.txt means the 18th symptom in the symptom list /data/symptom_contains.txt. )
 
-Herb list: /data/herbs_contains.txt
+Herb list: `/data/herbs_contains.txt`
 
-Symptom list: /data/symptom_contains.txt
+Symptom list: `/data/symptom_contains.txt`
 
-TCM MeSH herb-symptom correspondence knowledge: /data/symptom_herb_tcm_mesh.txt
+TCM MeSH herb-symptom correspondence knowledge: `/data/symptom_herb_tcm_mesh.txt`
 
-Symptom Category: /data/symptom_category.txt
+Symptom Category: `/data/symptom_category.txt`
 
 # Demo
 
