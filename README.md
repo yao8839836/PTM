@@ -17,7 +17,7 @@ Eclipse
 
 The preprocessed 33,765 prescriptions: /data/pre_herbs.txt, /data/pre_symptoms.txt. 
 
-Training set: /data/pre_herbs_train.txt, /data/pre_symptoms_train.txt
+'Training set': /data/pre_herbs_train.txt, /data/pre_symptoms_train.txt
 
 Test set: /data/pre_herbs_test.txt, /data/pre_symptoms_test.txt
 
