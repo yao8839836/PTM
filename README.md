@@ -22,7 +22,7 @@ The preprocessed 33,765 prescriptions: `/data/pre_herbs.txt`, `/data/pre_symptom
 `Test set`: `/data/pre_herbs_test.txt`, `/data/pre_symptoms_test.txt`
 
 Note: 
-1. Each line in above files is for a prescription, the same line in `/data/pre_herbsX.txt` and `/data/pre_symptomsX.txt` (X is _train or _test or '' ) is for the same prescription.
+1. Each line in above files is for a prescription, the same line in `/data/pre_herbsX.txt` and `/data/pre_symptomsX.txt` (X is _train or _test or ' ' ) is for the same prescription.
 
 2. Each number in above files means an herb or a symptom, each number is an index of the following herb list or symptom list. For example, '5' in `/file/pre_herbs_train.txt` means the 6th herb in the herb list `/data/herbs_contains.txt`, '17' in `/file/pre_symptoms_train.txt` means the 18th symptom in the symptom list `/data/symptom_contains.txt`. 
 
