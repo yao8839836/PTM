@@ -14,7 +14,7 @@ Eclipse
 # Data
 
 The Copyright of the dataset used in the paper belongs to  China Knowledge
-Centre for Engineering Sciences and Technology [CKCEST] (http://zcy.ckcest.cn/tcm/). The dataset is for research use only.
+Centre for Engineering Sciences and Technology [CKCEST](http://zcy.ckcest.cn/tcm/). The dataset is for research use only.
 
 98,334 raw prescriptions with herbs and symptoms are in `/data/prescriptions.txt` . Each line is for a prescription, symptoms are on the left and herbs are on the right.
 
